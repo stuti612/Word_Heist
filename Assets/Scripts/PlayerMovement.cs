@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
+    public Transform respawnPoint;
 
     void Start()
     {
@@ -53,7 +54,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Spike"))
         {
-            transform.position = new Vector3(-7f, -3f, 0f);
+            transform.position = respawnPoint.position;
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Guard"))
+        {
+            transform.position = respawnPoint.position;
             rb.linearVelocity = Vector2.zero;
         }
     }
