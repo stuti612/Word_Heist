@@ -4,7 +4,7 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float jumpForce = 10f;
+    public float jumpForce = 8f;
 
     private Rigidbody2D rb;
     private float moveInput;

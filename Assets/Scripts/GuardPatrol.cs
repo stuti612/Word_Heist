@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class GuardPatrol : MonoBehaviour
 {
-    public Transform pointA;
-    public Transform pointB;
+    public Transform point1;
+    public Transform point2;
     public float speed = 2f;
 
     private Transform target;
 
     void Start()
     {
-        target = pointB;
+        transform.position = point1.position;
+        target = point2;
     }
 
     void Update()
@@ -23,7 +24,7 @@ public class GuardPatrol : MonoBehaviour
 
         if (Vector2.Distance(transform.position, target.position) < 0.1f)
         {
-            target = target == pointA ? pointB : pointA;
+            target = target == point1 ? point2 : point1;
         }
     }
 }
