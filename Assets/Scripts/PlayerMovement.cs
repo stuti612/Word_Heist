@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
     public Transform respawnPoint;
+    private bool levelComplete = false;
+    public GameObject winText;
 
     void Start()
     {
@@ -21,18 +24,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (levelComplete) return;
+
         moveInput = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            // rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
-        // Debug.Log(isGrounded);
     }
 
     void FixedUpdate()
     {
+        if (levelComplete) return;
+
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
     }
 
@@ -45,17 +50,21 @@ public class PlayerMovement : MonoBehaviour
         );
     }
 
-    // private void OnDrawGizmosSelected()
-    // {
-    //     if (groundCheck == null) return;
-    //     Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-    // }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Spike"))
         {
             transform.position = respawnPoint.position;
             rb.linearVelocity = Vector2.zero;
+        }
+
+        if (other.CompareTag("Exit"))
+        {
+            levelComplete = true;
+            rb.linearVelocity = Vector2.zero;
+            rb.gravityScale = 0f;
+            if (winText != null)
+                winText.SetActive(true);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
