@@ -8,13 +8,13 @@ public class LetterInventory : MonoBehaviour
 
     public TMP_Text collectedText;
 
-    private StringBuilder collected = new StringBuilder();
+    public StringBuilder collected = new StringBuilder();
 
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
+            // Destroy(gameObject);
             return;
         }
         Instance = this;

@@ -62,6 +62,21 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("Exit"))
         {
+            LetterInventory li = FindObjectOfType<LetterInventory>();
+            if (li != null)
+            {
+                if (GameState.Instance == null)
+                {
+                    var go = new GameObject("GameState");
+                    go.AddComponent<GameState>();
+                }
+                GameState.Instance.collectedLettersSnapshot = li.collected.ToString();
+            }
+            else
+            {
+                Debug.LogWarning("LetterInventory not found when creating snapshot for exit scene.");
+            }
+
             SceneManager.LoadScene(ExitSceneName);
             // levelComplete = true;
             // rb.linearVelocity = Vector2.zero;

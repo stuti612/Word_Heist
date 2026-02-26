@@ -2,16 +2,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 public class ExitSceneController : MonoBehaviour
 {
     public Button goBackButton;
     [Tooltip("If no previous scene recorded, load this.")]
     public string fallbackScene = "MainMenu";
+    public TMP_Text collectedLettersText;
 
     void Start()
     {
         if (goBackButton != null) goBackButton.onClick.AddListener(OnGoBackPressed);
+        if (collectedLettersText != null && GameState.Instance != null)
+        {
+            collectedLettersText.text = GameState.Instance.collectedLettersSnapshot ?? "";
+        }
     }
 
     void OnGoBackPressed()
