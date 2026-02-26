@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
