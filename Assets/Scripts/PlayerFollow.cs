@@ -11,6 +11,8 @@ public class PlayerFollow : MonoBehaviour
     [Header("Camera Follow Speed")]
     public float followSpeed = 5f; // Speed at which the camera follows the player
 
+    public float minY = -4.5f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,21 +28,18 @@ public class PlayerFollow : MonoBehaviour
         float playerY = player.position.y;
 
         float difference = playerY - camY;
-
         float targetY = camY;
 
         if (difference > upperThreshold)
-        {
             targetY = playerY - upperThreshold;
-        }
         else if (difference < lowerThreshold)
-        {
             targetY = playerY - lowerThreshold;
-        }
 
-        // Smooth movement
         Vector3 newPos = transform.position;
         newPos.y = Mathf.Lerp(camY, targetY, followSpeed * Time.deltaTime);
+
+        // Clamp so camera never scrolls below the level
+        newPos.y = Mathf.Max(newPos.y, minY);
 
         transform.position = newPos;
     }
