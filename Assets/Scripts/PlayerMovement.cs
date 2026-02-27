@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform respawnPoint;
     private bool levelComplete = false;
     public GameObject winText;
+    public string ExitSceneName = "ExitScene";
 
     void Start()
     {
@@ -60,11 +63,27 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("Exit"))
         {
-            levelComplete = true;
-            rb.linearVelocity = Vector2.zero;
-            rb.gravityScale = 0f;
-            if (winText != null)
-                winText.SetActive(true);
+            LetterInventory li = FindObjectOfType<LetterInventory>();
+            if (li != null)
+            {
+                if (GameState.Instance == null)
+                {
+                    var go = new GameObject("GameState");
+                    go.AddComponent<GameState>();
+                }
+                GameState.Instance.collectedLettersSnapshot = li.collected.ToString();
+            }
+            else
+            {
+                Debug.LogWarning("LetterInventory not found when creating snapshot for exit scene.");
+            }
+
+            SceneManager.LoadScene(ExitSceneName);
+            // levelComplete = true;
+            // rb.linearVelocity = Vector2.zero;
+            // rb.gravityScale = 0f;
+            // if (winText != null)
+            //     winText.SetActive(true);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
