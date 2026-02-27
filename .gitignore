@@ -15,4 +15,4 @@
 *.slnx
 
 # ==== OS ====
-.DS_Store
+.DS_Storemono_crash*.json
