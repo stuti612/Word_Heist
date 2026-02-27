@@ -2,10 +2,14 @@
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
-[Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
+
+# Ignore Build folders EXCEPT the root WebGL Build folder
+[Bb]uild/
+!Build/
+!Build/**
 
 # ==== Visual Studio / Rider ====
 .vscode/
@@ -15,4 +19,5 @@
 *.slnx
 
 # ==== OS ====
-.DS_Storemono_crash*.json
+.DS_Store
+mono_crash*.json
